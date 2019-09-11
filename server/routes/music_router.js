@@ -33,8 +33,8 @@ router.post('/', (req, res) => {
 router.delete( '/:id', ( req, res ) => {
     console.log( req.params.id );
 
-    let queryText = `DELETE FROM "songs" WHERE "id" = ${req.params.id};`;
-    pool.query( queryText ).then((result) => {
+    let queryText = `DELETE FROM "songs" WHERE "id" = $1;`;
+    pool.query( queryText, [ req.params.id ] ).then((result) => {
         res.sendStatus(200)    
     })
     .catch(( err ) => {
