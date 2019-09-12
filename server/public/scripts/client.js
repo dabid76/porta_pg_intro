@@ -16,21 +16,36 @@ function getMusicData() {
         // append data to the DOM
         for (let i = 0; i < response.length; i++) {
             $('#musicTableBody').append(`
-                <tr>
+                <tr data-id="${response[i].id}">
                     <td>${response[i].artist}</td>
                     <td>${response[i].track}</td>
                     <td>${response[i].rank}</td>
                     <td>${response[i].published}</td>
-                    <td ><button data-id="${response[i].id}" class="deleteThis">Delete</button></td>
+                    <td><button class="deleteThis">Delete</button></td>
+                    <td><button class="rank">+</button><button class="rank">-</button></td>
                 </tr>
             `);
         }
         $( '.deleteThis' ).on( 'click', deleteBtn );
+        $( '.rank' ).on( 'click', updateRank );
     });
 }
 
+function updateRank() {
+    let songId = $(this).parent().parent().data('id');
+    let direction = $(this).text()
+    console.log( 'click ', direction);
+    $.ajax({
+        type: 'PUT',
+        url: `/musiclibrary/rank/${songId}`,
+        data: {
+            direction: direction
+        } // end data
+    }) // end ajax
+} // end updateRank
+
 function deleteBtn() {
-    let songId = $(this).data('id');
+    let songId = $(this).parent().parent().data('id');
     console.log( 'click button', songId );
 
     $.ajax({
@@ -63,3 +78,4 @@ function postMusicData() {
         getMusicData();
     });
 }
+

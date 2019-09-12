@@ -43,4 +43,9 @@ router.delete( '/:id', ( req, res ) => {
     })
 })
 
+router.put( '/rank/:id', ( req, res ) => {
+    console.log( req.params.id, req.body.direction );
+    res.sendStatus(200);
+});
+
 module.exports = router;
