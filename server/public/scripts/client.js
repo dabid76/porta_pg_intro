@@ -37,11 +37,16 @@ function updateRank() {
     console.log( 'click ', direction);
     $.ajax({
         type: 'PUT',
-        url: `/musiclibrary/rank/${songId}`,
+        url: `/musicLibrary/rank/${songId}`,
         data: {
             direction: direction
         } // end data
-    }) // end ajax
+    }).then(function( response ){
+        console.log(response);
+        getMusicData();
+    }).catch( function( error ){
+        alert( 'error on changing rank', error);
+    })
 } // end updateRank
 
 function deleteBtn() {
